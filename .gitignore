@@ -1,8 +1,7 @@
-/vcm_backend
 **/migrations
 **/__pycache__
 .DS_Store
 .vscode/*
 .idea
-
-
+db.sqlite3
+.venv
