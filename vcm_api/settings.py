@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "vcm_api.contest",
+    "vcm_api.problem",
     "corsheaders",
 ]
 
