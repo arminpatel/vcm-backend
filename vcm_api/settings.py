@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "vcm_api.contest",
     "vcm_api.problem",
+    "vcm_api.user", 
     "corsheaders",
 ]
 
