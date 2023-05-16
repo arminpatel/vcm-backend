@@ -10,3 +10,5 @@ class Contest(models.Model):
     problems = models.ManyToManyField(Problem, related_name="appeared_in")
     participants = models.ManyToManyField(
         get_user_model(), related_name="participated_in")
+    contest_creator = models.ManyToManyField(
+        get_user_model(), related_name="contests_created")
