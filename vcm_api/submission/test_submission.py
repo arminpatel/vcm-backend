@@ -44,10 +44,13 @@ def test_submission_creation_successful():
 @pytest.mark.django_db
 def testSubmission_problemAndUserLinkedProperly():
     test_problem = Problem.objects.create(
-        id="CF1811F", name="Is it Flower?", link="https://codeforces.com/problemset/problem/1811/F")
+        id="CF1811F", name="Is it Flower?",
+        link="https://codeforces.com/problemset/problem/1811/F", score=100)
 
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
+
+    test_contest.problems.add(test_problem)
 
     test_user = User.objects.create(
         first_name="test", last_name="user-1", username="theoden42", password="test_me123")
