@@ -1,5 +1,6 @@
 from rest_framework import generics
 from django.contrib.auth import get_user_model
+
 from vcm_api.user.serializers import UserSerializer
 
 User = get_user_model()
