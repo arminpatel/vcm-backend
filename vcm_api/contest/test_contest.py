@@ -12,9 +12,9 @@ User = get_user_model()
 def test_contest_create_model_successful():
     '''This tests successful creation of model'''
 
-    test_problem = Problem.objects.create(
-        id="CF1811F", name="Is it Flower?",
-        link="https://codeforces.com/problemset/problem/1811/F", score=100)
+    test_problem = Problem.objects.create(name="Is it Flower?",
+                                          link="https://codeforces.com/problemset/problem/1811/F",
+                                          score=100)
 
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
@@ -26,9 +26,9 @@ def test_contest_create_model_successful():
 @pytest.mark.django_db
 def test_contest_can_access_problem_succesful():
 
-    test_problem = Problem.objects.create(
-        id="CF1811F", name="Is it Flower?",
-        link="https://codeforces.com/problemset/problem/1811/F", score=100)
+    test_problem = Problem.objects.create(name="Is it Flower?",
+                                          link="https://codeforces.com/problemset/problem/1811/F",
+                                          score=100)
 
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
@@ -43,9 +43,10 @@ def test_contest_can_access_problem_succesful():
 def test_contest_link_with_user_successful():
     '''This tests if the contest creator field and particpant field are linked'''
 
-    test_problem = Problem.objects.create(
-        id="CF1811F", name="Is it Flower?",
-        link="https://codeforces.com/problemset/problem/1811/F", score=100)
+    test_problem = Problem.objects.create(name="Is it Flower?",
+                                          link="https://codeforces.com/problemset/problem/1811/F",
+                                          score=100)
+
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
 

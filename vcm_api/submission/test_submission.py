@@ -12,7 +12,7 @@ User = get_user_model()
 @pytest.mark.django_db
 def test_submission_creation_successful():
     test_problem = Problem.objects.create(
-        id="CF1811F", name="Is it Flower?", link="https://codeforces.com/problemset/problem/1811/F")
+        name="Is it Flower?", link="https://codeforces.com/problemset/problem/1811/F")
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
 
@@ -43,9 +43,9 @@ def test_submission_creation_successful():
 
 @pytest.mark.django_db
 def testSubmission_problemAndUserLinkedProperly():
-    test_problem = Problem.objects.create(
-        id="CF1811F", name="Is it Flower?",
-        link="https://codeforces.com/problemset/problem/1811/F", score=100)
+    test_problem = Problem.objects.create(name="Is it Flower?",
+                                          link="https://codeforces.com/problemset/problem/1811/F",
+                                          score=100)
 
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
