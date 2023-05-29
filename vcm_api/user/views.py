@@ -6,6 +6,12 @@ from vcm_api.user.serializers import UserSerializer
 User = get_user_model()
 
 
+class CreateUserView(generics.CreateAPIView):
+    """ View to create a new user """
+    model = User
+    serializer_class = UserSerializer
+
+
 class RetrieveProfileView(generics.RetrieveAPIView):
     """ View to retrieve user """
     queryset = User.objects.all()
