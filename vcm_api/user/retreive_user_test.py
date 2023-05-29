@@ -14,7 +14,7 @@ def testRetrieveUserView_invalidUsername_returnsNotFound():
     client = APIClient()
 
     # Act
-    response = client.get('/users/invalidUsername/')
+    response = client.get('/api/users/invalidUsername/')
 
     # Assert
     assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -29,7 +29,7 @@ def testRetrieveUserView_validUsername_returnsSuccessfully():
                            cc_handle='testCCHandle')
 
     # Act
-    response = client.get('/users/testUsername/')
+    response = client.get('/api/users/testUsername/')
 
     # Assert
     assert response.status_code == status.HTTP_200_OK
