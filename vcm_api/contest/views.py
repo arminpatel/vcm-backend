@@ -1,8 +1,9 @@
-from rest_framework.generics import RetrieveAPIView, ListAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView
 from vcm_api.contest.models import Contest
 from django.contrib.auth import get_user_model
 from vcm_api.contest.serializers import RetrieveContestSerializer
 from rest_framework.exceptions import NotFound
+from rest_framework.permissions import IsAuthenticated
 
 
 class RetrieveContestView(RetrieveAPIView):
@@ -25,4 +26,9 @@ class ListParticipantContestView(ListAPIView):
         queryset = query_user.participated_in
         return queryset
 
+    serializer_class = RetrieveContestSerializer
+
+class CreateContestView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    model = Contest
     serializer_class = RetrieveContestSerializer
