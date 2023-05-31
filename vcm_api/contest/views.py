@@ -33,12 +33,3 @@ class CreateContestView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
     model = Contest
     serializer_class = ContestSerializer
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update(
-            {
-                "username": self.request.user.username
-            }
-        )
-        return context

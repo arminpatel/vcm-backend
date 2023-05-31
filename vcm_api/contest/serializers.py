@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from vcm_api.contest.models import Contest
 from vcm_api.problem.serializers import ProblemSerializer
@@ -16,8 +15,7 @@ class ContestSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True}}
 
     def create(self, validated_data):
-        User = get_user_model()
-        current_user = User.objects.get(username=self.context.get("username"))
+        current_user = self.context['request'].user
         problem_list = validated_data.pop('problems')
 
         contest = Contest.objects.create(**validated_data)
