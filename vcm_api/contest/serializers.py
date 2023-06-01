@@ -27,3 +27,27 @@ class ContestSerializer(serializers.ModelSerializer):
             contest.problems.add(problem_object)
 
         return contest
+
+    def update(self, instance, validated_data):
+        updatable_fields = ['name', 'start_date_time', 'duration']
+
+        for field in updatable_fields:
+            if field in validated_data:
+                setattr(instance, field, validated_data[field])
+
+        if "problems" in validated_data:
+            problem_list = validated_data.pop('problems')
+            current_problem = instance.problems.all()
+
+            for problem in current_problem:
+                if problem not in problem_list:
+                    instance.problems.get(id=problem.id).delete()
+                else:
+                    problem_list.remove(problem)
+
+            for problem in problem_list:
+                problem_object = Problem.objects.create(**problem)
+                instance.problems.add(problem_object)
+
+        instance.save()
+        return instance
