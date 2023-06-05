@@ -34,7 +34,7 @@ def test_ListContestView_successful():
     test_contest2.participants.add(test_user_participant)
 
     # Act
-    response = client.get('/api/contests/user/theoden42', format="json")
+    response = client.get('/api/contests/user/theoden42/', format="json")
 
     # Assert
     assert response.status_code == status.HTTP_200_OK
@@ -76,8 +76,8 @@ def test_ListContestView_unsuccessful():
         first_name="test", last_name="user-1", username="theoden42", password="test_me123")
 
     # Act
-    response = client.get('/api/contests/user/test_user_incorrect', format="json")
-    response2 = client.get('/api/contests/user/theoden42')
+    response = client.get('/api/contests/user/test_user_incorrect/', format="json")
+    response2 = client.get('/api/contests/user/theoden42/')
 
     # Assert
     assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -99,7 +99,7 @@ def test_RetrieveContestView_successful():
     test_contest.problems.add(problem1, problem2)
 
     # Act
-    response = client.get('/api/contests/1', format="json")
+    response = client.get('/api/contests/1/', format="json")
 
     # Assert
     assert response.status_code == status.HTTP_200_OK
@@ -125,7 +125,7 @@ def test_RetrieveContestView_unsuccessful():
     # Arrange
     client = APIClient()
     # Act
-    response = client.get('/api/contests/2', format="json")
+    response = client.get('/api/contests/2/', format="json")
 
     # Assert
     assert response.status_code == status.HTTP_404_NOT_FOUND
