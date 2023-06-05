@@ -37,19 +37,43 @@ def created_contest():
 
 
 @pytest.mark.django_db
-def test_contest_update_all_details_successful_returns_200(created_contest):
+@pytest.mark.parametrize('user', ['contest-creator', 'admin'])
+def test_contest_update_all_details_by_contest_creator_or_admin_successful_returns_200(
+        created_contest,
+        user):
 
-    test_user = User.objects.create(first_name='test', last_name='user',
-                                    username='testuser', password='something')
+    if user != 'admin':
+        test_user = User.objects.create(first_name='test', last_name='user',
+                                        username='testuser', password='something')
+    else:
+        test_user = User.objects.create(first_name='test', last_name='user',
+                                        username='testuser', password='something', is_staff=True)
+
     client = APIClient()
     client.force_authenticate(user=test_user)
-    created_contest.contest_creator.add(test_user)
+
+    if user != 'admin':
+        created_contest.contest_creator.add(test_user)
 
     id = created_contest.id
     uri = f'/api/contests/{id}/'
     response = client.put(uri, data=data, format='json')
 
     assert response.status_code == status.HTTP_200_OK
+    assert response.data == {
+        'id': 1,
+        'name': 'nottestcontest',
+        'start_date_time': '2022-07-06T00:00:00Z',
+        'duration': '02:00:00',
+        'problems': [
+            {
+                'link': 'https://www.codechef.com/problems/TEST3',
+                'name': 'TEST3',
+                'score': 100
+            }
+        ]
+    }
+
     assert Contest.objects.get(id=id).name == 'nottestcontest'
     assert Contest.objects.get(id=id).start_date_time == datetime(
         2022, 7, 6, 00, 00, 00, 00, tzinfo=pytz.UTC)
@@ -116,7 +140,7 @@ def test_contest_update_old_problems_to_new_problems_successful_returns_200(crea
 
 
 @pytest.mark.django_db
-def test_user_not_contest_creator_update_contest_request_returns_403_forbidden(created_contest):
+def test_user_not_contest_creator_and_not_admin_update_contest_request_returns_403_forbidden(created_contest):    # noqa: E501
 
     test_user = User.objects.create(first_name='test', last_name='user',
                                     username='testuser', password='something')
@@ -142,7 +166,7 @@ def test_user_not_authenticated_update_contest_request_returns_401_unauthorized(
 
 
 @pytest.mark.django_db
-def test_contes_does_not_exist_update_request_returns_404_not_found():
+def test_contest_does_not_exist_update_request_returns_404_not_found():
     client = APIClient()
     client.force_authenticate(user=User.objects.create(
         first_name='test', last_name='user', username='testuser', password='something'))
