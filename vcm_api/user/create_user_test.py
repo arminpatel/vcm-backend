@@ -31,6 +31,8 @@ def testCreateUser_correctUserDetails_creationSuccess():
         }
 
     assert User.objects.first().username == 'testuser'
+    # Password should be hashed
+    assert User.objects.first().password != 'testpass'
 
 
 @pytest.mark.django_db
