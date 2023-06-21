@@ -18,3 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'first_name', 'last_name', 'password', 'profile']
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    def create(self, validated_data):
+        profile_data = validated_data.pop('profile', None)
+        user = User.objects.create_user(**validated_data)
+        if profile_data:
+            Profile.objects.create(user=user, **profile_data)
+        return user
