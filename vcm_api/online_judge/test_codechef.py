@@ -1,5 +1,5 @@
-import pytest
 from codechef import Codechef
+
 
 def test_check_solved():
     codechef = Codechef()

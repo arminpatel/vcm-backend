@@ -1,9 +1,8 @@
-import requests
+import datetime
+from time import sleep
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from time import sleep
-import datetime
-import pytz
+
 
 class Codechef:
     def __init__(self):
