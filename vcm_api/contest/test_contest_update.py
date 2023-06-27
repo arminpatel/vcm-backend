@@ -16,7 +16,8 @@ data = {
         {
             'link': 'https://www.codechef.com/problems/TEST3',
             'name': 'TEST3',
-            'score': 100
+            'score': 100,
+            "online_judge": "codechef"
         }
     ]
 }
@@ -26,9 +27,15 @@ data = {
 @pytest.mark.django_db
 def created_contest():
     problem1 = Problem.objects.create(
-        link='https://www.codechef.com/problems/TEST', name='TEST', score=100)
+        link='https://www.codechef.com/problems/TEST',
+        name='TEST',
+        score=100,
+        online_judge="codechef")
     problem2 = Problem.objects.create(
-        link='https://www.codechef.com/problems/TEST2', name='TEST2', score=100)
+        link='https://www.codechef.com/problems/TEST2',
+        name='TEST2',
+        score=100,
+        online_judge="codechef")
     contest = Contest.objects.create(name='testcontest', start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
     contest.problems.add(problem1)
@@ -69,7 +76,8 @@ def test_contest_update_all_details_by_contest_creator_or_admin_successful_retur
             {
                 'link': 'https://www.codechef.com/problems/TEST3',
                 'name': 'TEST3',
-                'score': 100
+                'score': 100,
+                "online_judge": "codechef"
             }
         ]
     }
@@ -120,12 +128,14 @@ def test_contest_update_old_problems_to_new_problems_successful_returns_200(crea
             {
                 'link': 'https://www.codechef.com/problems/TEST3',
                 'name': 'TEST3',
-                'score': 100
+                'score': 100,
+                'online_judge': 'codechef'
             },
             {
                 'link': 'https://www.codechef.com/problems/TEST',
                 'name': 'TEST',
-                'score': 100
+                'score': 100,
+                'online_judge': 'codechef'
 
             }
         ]
