@@ -39,7 +39,6 @@ class Codechef:
 
     def _get_page_source(self, url):
         self.driver.get(url)
-        sleep(1)
         return self.driver.page_source
 
     def _get_time(self, time):
@@ -47,11 +46,6 @@ class Codechef:
         Convert time obtained from codechef to unix timestamp
         """
         time = time.split('(')[0].strip()
-        print(time)
         aware_time = datetime.datetime.strptime(time, "%a %b %d %Y %H:%M:%S %Z%z")
 
         return aware_time.timestamp()
-
-
-if __name__ == "__main__":
-    print(Codechef().check_solved("sanu_sona", "LASTRBS", 1687321800, 0.5 * 3600))
