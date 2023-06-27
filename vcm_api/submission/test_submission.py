@@ -12,7 +12,11 @@ User = get_user_model()
 @pytest.mark.django_db
 def test_submission_creation_successful():
     test_problem = Problem.objects.create(
-        name="Is it Flower?", link="https://codeforces.com/problemset/problem/1811/F")
+        name="Is it Flower?",
+        link="https://codeforces.com/problemset/problem/1811/F",
+        score=100,
+        online_judge="codeforces"
+    )
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
 
@@ -28,15 +32,14 @@ def test_submission_creation_successful():
     assert Contest.objects.count() == 1
 
     test_submission = Submission.objects.create(user=test_user_participant,
-                                                contest=test_contest,
                                                 problem=test_problem,
                                                 time=datetime(2022, 11, 23, 19, 10, 15, 27,
                                                               tzinfo=pytz.UTC), correct_answer=True)
 
-    td = test_submission.time - test_submission.contest.start_date_time
+    td = test_submission.time - test_submission.problem.contest.start_date_time
 
     assert Submission.objects.count() == 1
-    assert test_submission.contest.name == "Good To Go"
+    assert test_submission.problem.contest.name == "Good To Go"
 
     assert td.days == 0 and td.seconds == 903 and td.microseconds == 4
 
@@ -45,7 +48,8 @@ def test_submission_creation_successful():
 def testSubmission_problemAndUserLinkedProperly():
     test_problem = Problem.objects.create(name="Is it Flower?",
                                           link="https://codeforces.com/problemset/problem/1811/F",
-                                          score=100)
+                                          score=100,
+                                          online_judge="codeforces")
 
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
@@ -56,7 +60,6 @@ def testSubmission_problemAndUserLinkedProperly():
         first_name="test", last_name="user-1", username="theoden42", password="test_me123")
 
     Submission.objects.create(user=test_user,
-                              contest=test_contest,
                               problem=test_problem,
                               time=datetime(2022, 11, 23, 19, 10, 15, 27,
                                             tzinfo=pytz.UTC), correct_answer=True)

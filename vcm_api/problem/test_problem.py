@@ -6,7 +6,8 @@ from vcm_api.problem import models
 def test_problem_create_model_successful():
     models.Problem.objects.create(name="Is it Flower?",
                                   link="https://codeforces.com/problemset/problem/1811/F",
-                                  score=100)
+                                  score=100,
+                                  online_judge="codeforces",)
     assert models.Problem.objects.count() == 1
 
 
