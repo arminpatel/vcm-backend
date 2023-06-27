@@ -17,7 +17,7 @@ class Codechef:
         Check if a user has solved a problem in a contest
         """
 
-        url = f"https://www.codechef.com/status/{problem_code}?usernames={user}"
+        url = f"https://www.codechef.com/status/{problem_code}?usernames={user}&limit=100"
 
         page_source = self._get_page_source(url)
 
@@ -39,6 +39,7 @@ class Codechef:
 
     def _get_page_source(self, url):
         self.driver.get(url)
+        sleep(1)
         return self.driver.page_source
 
     def _get_time(self, time):
