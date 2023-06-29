@@ -15,12 +15,14 @@ contest_creation_body = {
         {
             "name": "Test Problem 1",
             "link": "https://www.google.com",
-            "score": 100
+            "score": 100,
+            "online_judge": "codeforces"
         },
         {
             "name": "Test Problem 2",
             "link": "https://www.google.com",
-            "score": 100
+            "score": 100,
+            "online_judge": "codeforces"
         }
     ]
 }

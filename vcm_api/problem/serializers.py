@@ -6,4 +6,4 @@ class ProblemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Problem
-        fields = ['name', 'link', 'score']
+        fields = ['name', 'link', 'score', 'online_judge']

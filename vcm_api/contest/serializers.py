@@ -2,6 +2,7 @@ from rest_framework import serializers
 from vcm_api.contest.models import Contest
 from vcm_api.problem.serializers import ProblemSerializer
 from vcm_api.problem.models import Problem
+from django.core.exceptions import ValidationError
 
 
 class ContestSerializer(serializers.ModelSerializer):
@@ -23,7 +24,12 @@ class ContestSerializer(serializers.ModelSerializer):
         contest.participants.add(current_user)
 
         for problem in problem_list:
-            problem_object = Problem.objects.create(**problem)
+            try:
+                problem_object = Problem.objects.create(**problem)
+            except ValidationError as e:
+                print(e)
+                raise serializers.ValidationError(e)
+
             contest.problems.add(problem_object)
 
         return contest

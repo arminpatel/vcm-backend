@@ -16,9 +16,18 @@ def test_ListContestView_successful():
     client = APIClient()
     User = get_user_model()
 
-    problem1 = Problem.objects.create(name="someproblem1", link="somelink.com", score=100)
-    problem2 = Problem.objects.create(name='someproblem2', link="somelink.com", score=300)
-    problem3 = Problem.objects.create(name='someproblem3', link="somelink.com", score=200)
+    problem1 = Problem.objects.create(name="someproblem1",
+                                      link="https://somelink.com",
+                                      score=100,
+                                      online_judge="codeforces")
+    problem2 = Problem.objects.create(name='someproblem2',
+                                      link="https://somelink.com",
+                                      score=300,
+                                      online_judge="codeforces")
+    problem3 = Problem.objects.create(name='someproblem3',
+                                      link="https://somelink.com",
+                                      score=200,
+                                      online_judge="codeforces")
     test_user_participant = User.objects.create(
         first_name="test", last_name="user-1", username="theoden42", password="test_me123")
 
@@ -46,12 +55,14 @@ def test_ListContestView_successful():
                      ('problems', [
                          OrderedDict(
                              [('name', 'someproblem1'),
-                              ('link', 'somelink.com'),
-                              ('score', 100)]),
+                              ('link', 'https://somelink.com'),
+                              ('score', 100),
+                              ('online_judge', 'codeforces')]),
                          OrderedDict(
                              [('name', 'someproblem2'),
-                              ('link', 'somelink.com'),
-                              ('score', 300)])
+                              ('link', 'https://somelink.com'),
+                              ('score', 300),
+                              ('online_judge', 'codeforces')])
                      ]
         )]),
         OrderedDict([('id', 2), ('name', 'Good To Go2'),
@@ -60,9 +71,10 @@ def test_ListContestView_successful():
                      ('problems', [
                          OrderedDict(
                              [('name', 'someproblem3'),
-                              ('link', 'somelink.com'),
-                              ('score', 200)])]
-                      )])
+                              ('link', 'https://somelink.com'),
+                              ('score', 200),
+                              ('online_judge', 'codeforces')])]
+                      )]),
     ]
 
 
@@ -90,8 +102,14 @@ def test_RetrieveContestView_successful():
 
     # Arrange
     client = APIClient()
-    problem1 = Problem.objects.create(name="someproblem1", link="somelink.com", score=100)
-    problem2 = Problem.objects.create(name='someproblem2', link="somelink.com", score=300)
+    problem1 = Problem.objects.create(name="someproblem1",
+                                      link="https://somelink.com",
+                                      score=100,
+                                      online_judge="codeforces")
+    problem2 = Problem.objects.create(name='someproblem2',
+                                      link="https://somelink.com",
+                                      score=300,
+                                      online_judge="codeforces")
 
     test_contest = Contest.objects.create(name="Good To Go", start_date_time=datetime(
         2022, 11, 23, 18, 55, 12, 23, tzinfo=pytz.UTC), duration=timedelta(hours=2, minutes=30))
@@ -109,12 +127,14 @@ def test_RetrieveContestView_successful():
                                          ('problems', [
                                              OrderedDict(
                                                  [('name', 'someproblem1'),
-                                                  ('link', 'somelink.com'),
-                                                  ('score', 100)]),
+                                                  ('link', 'https://somelink.com'),
+                                                  ('score', 100),
+                                                  ('online_judge', 'codeforces')]),
                                              OrderedDict(
                                                  [('name', 'someproblem2'),
-                                                  ('link', 'somelink.com'),
-                                                  ('score', 300)])
+                                                  ('link', 'https://somelink.com'),
+                                                  ('score', 300),
+                                                  ('online_judge', 'codeforces')])
                                          ]
     )])
 
