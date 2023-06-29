@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "vcm_api.user",
     "vcm_api.submission",
     "corsheaders",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
