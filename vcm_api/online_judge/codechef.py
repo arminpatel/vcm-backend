@@ -37,6 +37,9 @@ class Codechef:
 
         return False
 
+    def get_problem_id(self, url):
+        return url.split("/")[-1]
+
     def _get_page_source(self, url):
         self.driver.get(url)
         sleep(1)

@@ -68,3 +68,33 @@ def testSubmission_problemAndUserLinkedProperly():
     assert test_problem.submissions.count() == 1
     assert test_user.submissions.count() == 1
     assert test_user.submissions.first().problem == test_problem
+
+
+@pytest.mark.django_db
+def test_problemStatus_unauthenticatedUser_returnsForbidden():
+    pass
+
+
+@pytest.mark.django_db
+def test_problemStatus_invalidProblemId_returnsBadRequest():
+    pass
+
+
+@pytest.mark.django_db
+def test_ProblemStatus_authenticatedUserIsNotProblemOwner_returnsForbidden():
+    pass
+
+
+@pytest.mark.django_db
+def test_ProblemStatus_noUserIdForProblemsOnlineJudge_returnsBadRequest():
+    pass
+
+
+@pytest.mark.django_db
+def test_ProblemStatus_validRequest_problemUnSolved_returnSuccessfully():
+    pass
+
+
+@pytest.mark.django_db
+def test_ProblemStatus_validRequest_problemSolved_returnSuccessfully():
+    pass
