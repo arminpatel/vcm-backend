@@ -38,5 +38,5 @@ urlpatterns = [
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/contests/', include('vcm_api.contest.urls')),
     path('api/users/', include('vcm_api.user.urls')),
-    path('api/submissions', include('vcm_api.submission.urls'))
+    path('api/submissions/', include('vcm_api.submission.urls'))
 ]

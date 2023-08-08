@@ -23,17 +23,17 @@ class Codechef:
 
         soup = BeautifulSoup(page_source, "html.parser")
 
-        rows = soup.find("tbody").find_all("tr")
-
-        for row in rows:
-            submission_time = row.find_all("td")[1].span['title']
-            submission_time = self._get_time(submission_time)
-
-            is_accepted = row.find_all("td")[3].div.div['title'] == "accepted"
-
-            if is_accepted and  \
-               contest_start_time <= submission_time <= contest_start_time + duration:
-                return True
+        try:
+            rows = soup.find("tbody").find_all("tr")
+            for row in rows:
+                submission_time = row.find_all("td")[1].span['title']
+                submission_time = self._get_time(submission_time)
+                is_accepted = row.find_all("td")[3].div.div['title'] == "accepted"
+                if is_accepted and  \
+                        contest_start_time <= submission_time <= contest_start_time + duration:
+                    return True
+        except BaseException:
+            return False
 
         return False
 
@@ -42,7 +42,7 @@ class Codechef:
 
     def _get_page_source(self, url):
         self.driver.get(url)
-        sleep(1)
+        sleep(3)
         return self.driver.page_source
 
     def _get_time(self, time):
