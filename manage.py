@@ -7,9 +7,9 @@ from vcm_api.settings import base
 
 def main():
     """Run administrative tasks."""
-    if base.DEBUG: 
+    if base.DEBUG:
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcm_api.settings.local")
-    else: 
+    else:
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcm_api.settings.production")
     try:
         from django.core.management import execute_from_command_line
