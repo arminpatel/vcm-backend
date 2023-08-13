@@ -2,11 +2,15 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from vcm_api.settings import base
 
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcm_api.settings")
+    if base.DEBUG: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcm_api.settings.local")
+    else: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vcm_api.settings.production")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
