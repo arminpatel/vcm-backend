@@ -80,7 +80,7 @@ def test_problemStatus_invalidProblemId_returns_bad_request(test_user):
 
 
 @pytest.mark.django_db
-def test_ProblemStatus_authenticatedUserIsNotProblemOwner_returns_forbidden(
+def test_ProblemStatus_authenticatedUserIsNotProblemOwnerOrParticipantOrAdmin_returns_forbidden(
         test_contest, test_user):
     client = APIClient()
     client.force_authenticate(user=test_user)
@@ -143,12 +143,38 @@ def test_ProblemStatus_validRequest_problemUnSolved_returnsBad_Request(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('problem_id', [1, 2, 3])
-def test_ProblemStatus_validRequest_problemSolved_returnSuccessfully(
+def test_ProblemStatus_validRequest_ContestOwner_problemSolved_returnSuccessfully(
+        problem_id, test_user, test_profile, test_contest):
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    test_user.profile = test_profile
+    test_contest.contest_creator.add(test_user)
+    uri = '/api/submissions/'
+    response = client.post(uri, {"problem_id": problem_id})
+    assert response.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('problem_id', [1, 2, 3])
+def test_ProblemStatus_validRequest_ContestParticipant_problemSolved_returnSuccessfully(  # noqa: E501
         problem_id, test_user, test_profile, test_contest):
     client = APIClient()
     client.force_authenticate(user=test_user)
     test_user.profile = test_profile
     test_contest.participants.add(test_user)
+    uri = '/api/submissions/'
+    response = client.post(uri, {"problem_id": problem_id})
+    assert response.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('problem_id', [1, 2, 3])
+def test_ProblemStatus_validRequest_Admin_problemSolved_returnSuccessfully(  # noqa: E501
+        problem_id, test_user, test_profile, test_contest):
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    test_user.profile = test_profile
+    test_user.is_staff = True
     uri = '/api/submissions/'
     response = client.post(uri, {"problem_id": problem_id})
     assert response.status_code == status.HTTP_201_CREATED
