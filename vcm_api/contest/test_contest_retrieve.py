@@ -54,15 +54,21 @@ def test_ListContestView_successful():
                      ('duration', '02:30:00'),
                      ('problems', [
                          OrderedDict(
-                             [('name', 'someproblem1'),
+                             [('id', 1),
+                              ('name', 'someproblem1'),
                               ('link', 'https://somelink.com'),
                               ('score', 100),
-                              ('online_judge', 'codeforces')]),
+                              ('online_judge', 'codeforces'),
+                              ('is_solved', False)
+                              ]),
                          OrderedDict(
-                             [('name', 'someproblem2'),
+                             [('id', 2),
+                              ('name', 'someproblem2'),
                               ('link', 'https://somelink.com'),
                               ('score', 300),
-                              ('online_judge', 'codeforces')])
+                              ('online_judge', 'codeforces'),
+                              ('is_solved', False)
+                              ])
                      ]
         )]),
         OrderedDict([('id', 2), ('name', 'Good To Go2'),
@@ -70,11 +76,15 @@ def test_ListContestView_successful():
                      ('duration', '02:30:00'),
                      ('problems', [
                          OrderedDict(
-                             [('name', 'someproblem3'),
+                             [('id', 3),
+                              ('name', 'someproblem3'),
                               ('link', 'https://somelink.com'),
                               ('score', 200),
-                              ('online_judge', 'codeforces')])]
-                      )]),
+                              ('online_judge', 'codeforces'),
+                              ('is_solved', False)
+                              ])
+                     ]
+        )]),
     ]
 
 
@@ -126,15 +136,21 @@ def test_RetrieveContestView_successful():
                                          ('duration', '02:30:00'),
                                          ('problems', [
                                              OrderedDict(
-                                                 [('name', 'someproblem1'),
+                                                 [('id', 1),
+                                                  ('name', 'someproblem1'),
                                                   ('link', 'https://somelink.com'),
                                                   ('score', 100),
-                                                  ('online_judge', 'codeforces')]),
+                                                  ('online_judge', 'codeforces'),
+                                                  ('is_solved', False)
+                                                  ]),
                                              OrderedDict(
-                                                 [('name', 'someproblem2'),
+                                                 [('id', 2),
+                                                  ('name', 'someproblem2'),
                                                   ('link', 'https://somelink.com'),
                                                   ('score', 300),
-                                                  ('online_judge', 'codeforces')])
+                                                  ('online_judge', 'codeforces'),
+                                                  ('is_solved', False)
+                                                  ])
                                          ]
     )])
 
