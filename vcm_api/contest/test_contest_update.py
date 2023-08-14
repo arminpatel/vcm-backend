@@ -82,7 +82,6 @@ def test_contest_update_all_details_by_contest_creator_or_admin_successful_retur
              }
         ]
     }
-    print(response.data)
 
     assert Contest.objects.get(id=id).name == 'nottestcontest'
     assert Contest.objects.get(id=id).start_date_time == datetime(
