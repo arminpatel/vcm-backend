@@ -73,12 +73,13 @@ def test_contest_update_all_details_by_contest_creator_or_admin_successful_retur
         'start_date_time': '2022-07-06T00:00:00Z',
         'duration': '02:00:00',
         'problems': [
-            {
+            {'id': 3,
                 'link': 'https://www.codechef.com/problems/TEST3',
                 'name': 'TEST3',
                 'score': 100,
-                "online_judge": "codechef"
-            }
+                "online_judge": "codechef",
+                'is_solved': False
+             }
         ]
     }
 

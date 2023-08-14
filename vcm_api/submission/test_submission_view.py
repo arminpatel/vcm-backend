@@ -178,3 +178,28 @@ def test_ProblemStatus_validRequest_Admin_problemSolved_returnSuccessfully(  # n
     uri = '/api/submissions/'
     response = client.post(uri, {"problem_id": problem_id})
     assert response.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('problem_id', [1, 2, 3])
+def test_ProblemStatus_is_solved_is_true_in_get_contest_view_response_after_successful_submission(
+        problem_id, test_user, test_profile, test_contest):
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    test_user.profile = test_profile
+    test_contest.participants.add(test_user)
+    uri1 = '/api/submissions/'
+    response = client.post(uri1, {"problem_id": problem_id})
+    assert response.status_code == status.HTTP_201_CREATED
+    # get the problems from the contest view and check if the status of the
+    # problem is correctly identified
+    uri2 = '/api/contests/1/'
+    response = client.get(uri2, format="json")
+    assert response.status_code == status.HTTP_200_OK
+    response_problems = response.data.pop("problems")
+
+    for problem in response_problems:
+        if problem['id'] != problem_id:
+            assert not problem['is_solved']
+        else:
+            assert problem['is_solved']
