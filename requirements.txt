@@ -24,6 +24,7 @@ mccabe==0.7.0
 outcome==1.2.0
 packaging==23.0
 pluggy==1.0.0
+psycopg2==2.9.7
 pycodestyle==2.10.0
 pyflakes==3.0.1
 PyJWT==2.7.0
