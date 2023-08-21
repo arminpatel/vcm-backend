@@ -8,3 +8,10 @@ CORS_ORIGIN_WHITELIST = (
     "http://localhost:5173",
     "https://vcmaker.netlify.app",
 )
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
