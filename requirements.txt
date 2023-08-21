@@ -8,6 +8,8 @@ charset-normalizer==3.1.0
 coverage==7.2.3
 Django==4.2
 django-cors-headers==3.14.0
+django-extensions==3.2.1
+django-filter==22.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 drf-yasg==1.21.6
@@ -41,6 +43,9 @@ sqlparse==0.4.3
 tomli==2.0.1
 trio==0.22.0
 trio-websocket==0.10.3
+typing_extensions==4.6.3
+tzdata==2022.6
 uritemplate==4.1.1
 urllib3==2.0.3
+whitenoise==6.5.0
 wsproto==1.2.0
