@@ -18,7 +18,8 @@ def testCreateUser_correctUserDetails_creationSuccess():
                            'password': 'testpass',
                            'first_name': 'test',
                            'last_name': 'user',
-                           })
+                           'profile': {},
+                           }, format='json')
 
     # Assert
     assert response.status_code == status.HTTP_201_CREATED
