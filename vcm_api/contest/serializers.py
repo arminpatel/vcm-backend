@@ -3,6 +3,8 @@ from vcm_api.contest.models import Contest
 from vcm_api.problem.serializers import ProblemSerializer
 from vcm_api.problem.models import Problem
 from django.core.exceptions import ValidationError
+from datetime import datetime
+import pytz
 
 
 class ContestSerializer(serializers.ModelSerializer):
@@ -14,6 +16,14 @@ class ContestSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'start_date_time',
                   'duration', 'problems']
         extra_kwargs = {'id': {'read_only': True}}
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        current_time = datetime.now(pytz.UTC)
+        start_date_time = instance.start_date_time
+        if start_date_time > current_time:
+            data['problems'].clear()
+        return data
 
     def create(self, validated_data):
         current_user = self.context['request'].user
