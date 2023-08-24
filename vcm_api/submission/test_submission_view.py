@@ -4,6 +4,7 @@ from datetime import timedelta, datetime
 from vcm_api.contest.models import Contest
 from vcm_api.problem.models import Problem
 from vcm_api.user.models import Profile
+from vcm_api.submission.models import Submission
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -203,3 +204,110 @@ def test_ProblemStatus_is_solved_is_true_in_get_contest_view_response_after_succ
             assert not problem['is_solved']
         else:
             assert problem['is_solved']
+
+
+@pytest.mark.django_db
+def test_submission_retrieval_from_contest_id_successful_returns_200_OK(
+        test_contest, test_user, test_profile):
+    test_user.profile = test_profile
+    Submission.objects.create(
+        user=test_user, problem=Problem.objects.filter(
+            id=1).first(), correct_answer=True, time=datetime(
+            2023, 8, 9, 12, 0, 0, 0, tzinfo=pytz.UTC))
+
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    response = client.get('/api/submissions/1/', format='json')
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data == [{
+                             "id": 1,
+                             "user": {
+                                 "username": "gibberish",
+                                 "first_name": "test",
+                                 "last_name": "user",
+                                 "profile": {
+                                     "cf_handle": "gtheoden42",
+                                     "cc_handle": "theoden42",
+                                     "ac_handle": "gtheoden42"
+                                 }
+                             },
+                             "problem": {
+                                 "id": 1,
+                                 "name": "PermuTree",
+                                 "link": "https://codeforces.com/problemset/problem/1856/E1",
+                                 "score": 100,
+                                 "online_judge": "codeforces",
+                                 "is_solved": True
+                             },
+                             "correct_answer": True,
+                             "time": "2023-08-09T12:00:00Z"
+                             }]
+
+
+@pytest.mark.django_db
+def test_submission_retrieval_from_contest_id_and_username_successful_returns_200_OK(
+        test_contest, test_profile, test_user):
+    test_user.profile = test_profile
+    Submission.objects.create(
+        user=test_user, problem=Problem.objects.filter(
+            id=1).first(), correct_answer=True, time=datetime(
+            2023, 8, 9, 12, 0, 0, 0, tzinfo=pytz.UTC))
+
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    response = client.get('/api/submissions/1/gibberish/', format='json')
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data == [{
+                             "id": 1,
+                             "user": {
+                                 "username": "gibberish",
+                                 "first_name": "test",
+                                 "last_name": "user",
+                                 "profile": {
+                                     "cf_handle": "gtheoden42",
+                                     "cc_handle": "theoden42",
+                                     "ac_handle": "gtheoden42"
+                                 }
+                             },
+                             "problem": {
+                                 "id": 1,
+                                 "name": "PermuTree",
+                                 "link": "https://codeforces.com/problemset/problem/1856/E1",
+                                 "score": 100,
+                                 "online_judge": "codeforces",
+                                 "is_solved": True
+                             },
+                             "correct_answer": True,
+                             "time": "2023-08-09T12:00:00Z"
+                             }]
+
+
+@pytest.mark.django_db
+def test_submission_retrieval_from_invalid_contest_id_and_valid_username_returns_404_NOT_FOUND(
+        test_user,
+        test_profile):
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    response = client.get('/api/submissions/100/gibberish/', format='json')
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.django_db
+def test_submission_retrieval_from_valid_contest_id_and_invalid_username_returns_404_NOT_FOUND(
+        test_contest,
+        test_user):
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    response = client.get('/api/submissions/1/someother/')
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.django_db
+def test_submission_retrieval_from_invalid_contest_id_returns_404_NOT_FOUND(
+        test_contest, test_user):
+    client = APIClient()
+    client.force_authenticate(user=test_user)
+    response = client.get('/api/submissions/100/')
+    assert response.status_code == status.HTTP_404_NOT_FOUND
