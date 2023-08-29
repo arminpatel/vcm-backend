@@ -27,7 +27,11 @@ def testCreateUser_correctUserDetails_creationSuccess():
             'username': 'testuser',
             'first_name': 'test',
             'last_name': 'user',
-            'profile': None,
+            'profile': {
+                'cf_handle': None,
+                'cc_handle': None,
+                'ac_handle': None,
+            },
         }
 
     assert User.objects.first().username == 'testuser'
