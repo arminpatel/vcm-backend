@@ -3,6 +3,8 @@ from vcm_api.submission.models import Submission
 from vcm_api.problem.models import Problem
 from django.contrib.auth import get_user_model
 from vcm_api.online_judge import codechef, codeforces, atcoder
+from vcm_api.user.serializers import UserSerializer
+from vcm_api.problem.serializers import ProblemSerializer
 from datetime import datetime
 import pytz
 
@@ -87,3 +89,12 @@ class SubmissionSerializer(serializers.ModelSerializer):
             time=datetime.now(pytz.UTC),
             correct_answer=True)
         return new_submission
+
+
+class SubmissionListSerializer(serializers.ModelSerializer):
+    problem = ProblemSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = Submission
+        fields = ['id', 'user', 'problem', 'correct_answer', 'time']
