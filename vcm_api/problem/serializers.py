@@ -5,6 +5,7 @@ from vcm_api.submission.models import Submission
 
 class ProblemSerializer(serializers.ModelSerializer):
     is_solved = serializers.SerializerMethodField()
+
     class Meta:
         model = Problem
         fields = ['id', 'name', 'link', 'score', 'online_judge', 'is_solved']
