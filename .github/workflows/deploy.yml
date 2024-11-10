@@ -1,0 +1,27 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: Ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Install SSH Agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_VCM }}
+
+      - name: Pull New Changes
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} << EOF
+            cd ${{ secrets.VCM_FRONTEND_DIR }} 
+            sudo git pull origin main
+          EOF
+        
